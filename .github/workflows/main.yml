@@ -1,0 +1,19 @@
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Deploy to Aptible
+        uses: aptible/aptible-deploy-action@v5
+        with:
+          type: git
+          app: ${{ vars.APTIBLE_APP }}
+          environment: ${{ vars.APTIBLE_ENVIRONMENT }}
+          username: ${{ secrets.APTIBLE_USERNAME }}
+          password: ${{ secrets.APTIBLE_PASSWORD }}
